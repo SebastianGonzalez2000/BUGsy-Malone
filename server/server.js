@@ -44,6 +44,33 @@ app.get("/get_bugs", (req, result) => {
   });
 });
 
+app.put("/reassign_bug", (req, result) => {
+  const bugId = req.body.bugId;
+  const devId = req.body.devId;
+  db.query(
+    "UPDATE bugs  SET devId = ? WHERE bugId = ?",
+    [devId, bugId],
+    (err, res) => {
+      if (err) {
+        console.log(err);
+      } else {
+        result.send(res);
+      }
+    }
+  );
+});
+
+app.delete("/delete_bug/:bugId", (req, result) => {
+  const bugId = req.params.bugId;
+  db.query("DELETE FROM bugs WHERE bugId = ?", bugId, (err, res) => {
+    if (err) {
+      console.log(err);
+    } else {
+      result.send(res);
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

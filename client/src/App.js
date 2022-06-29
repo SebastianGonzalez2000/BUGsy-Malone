@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import Axios from "axios";
+const PORT = 3500;
 
 function App() {
   const [bugId, setBugId] = useState(0);
@@ -9,8 +10,9 @@ function App() {
 
   const [bugList, setBugList] = useState([]);
 
+  const [newDevId, setNewDevId] = useState(0);
+
   const handleCreateBug = () => {
-    const PORT = 3500;
     Axios.post(`http://localhost:${PORT}/create_bug`, {
       bugId: bugId,
       devId: devId,
@@ -25,9 +27,37 @@ function App() {
   };
 
   const handleShowBugs = () => {
-    const PORT = 3500;
     Axios.get(`http://localhost:${PORT}/get_bugs`).then((res) => {
       setBugList(res.data);
+    });
+  };
+
+  const handleUpdateDevId = (bugId) => {
+    Axios.put(`http://localhost:${PORT}/reassign_bug`, {
+      bugId: bugId,
+      devId: newDevId,
+    }).then((res) => {
+      setBugList(
+        bugList.map((val) => {
+          return val.bugId == bugId
+            ? {
+                bugId: val.bugId,
+                devId: newDevId,
+                description: val.description,
+              }
+            : val;
+        })
+      );
+    });
+  };
+
+  const handleDeleteBug = (bugId) => {
+    Axios.delete(`http://localhost:${PORT}/delete_bug/${bugId}`).then((res) => {
+      setBugList(
+        bugList.filter((val) => {
+          return val.bugId != bugId;
+        })
+      );
     });
   };
 
@@ -69,12 +99,37 @@ function App() {
           {bugList.map((val, key) => {
             return (
               <div className="Bug" key={val.bugId}>
-                <label>Bug ID:</label>
-                <h3>{val.bugId}</h3>
-                <label>Dev ID:</label>
-                <h3>{val.devId}</h3>
-                <label>Description:</label>
-                <p>{val.description}</p>
+                <div className="BugInfo">
+                  <label>Bug ID:</label>
+                  <h3>{val.bugId}</h3>
+                  <label>Dev ID:</label>
+                  <h3>{val.devId}</h3>
+                  <label>Description:</label>
+                  <p>{val.description}</p>
+                </div>
+
+                <div className="Updates">
+                  <input
+                    type="number"
+                    onChange={(event) => {
+                      setNewDevId(event.target.value);
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      handleUpdateDevId(val.bugId);
+                    }}
+                  >
+                    Update Dev Id
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleDeleteBug(val.bugId);
+                    }}
+                  >
+                    Delete Bug
+                  </button>
+                </div>
               </div>
             );
           })}

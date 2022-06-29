@@ -34,11 +34,16 @@
 }
 
 .BugsWindow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 10px;
+  width: 100%;
 }
 
 .Bug {
   display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
@@ -46,4 +51,23 @@
 .Bug p {
   margin: 5px;
   margin-right: 10px;
+}
+
+.BugInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Updates {
+  display: flex;
+  flex-direction: row;
+}
+
+.Updates input {
+  width: 50px;
+}
+
+.Updates button {
+  width: 120px;
 }
