@@ -2,9 +2,14 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const path = require("path");
+
+const { logger } = require("./middleware/logger");
+const errorHandler = require("./middleware/errorHandler");
 
 const PORT = 3500;
 
+app.use(logger);
 app.use(cors());
 app.use(express.json());
 
@@ -70,6 +75,8 @@ app.delete("/delete_bug/:bugId", (req, result) => {
     }
   });
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -39,7 +39,7 @@ function App() {
     }).then((res) => {
       setBugList(
         bugList.map((val) => {
-          return val.bugId == bugId
+          return val.bugId === bugId
             ? {
                 bugId: val.bugId,
                 devId: newDevId,
@@ -55,7 +55,7 @@ function App() {
     Axios.delete(`http://localhost:${PORT}/delete_bug/${bugId}`).then((res) => {
       setBugList(
         bugList.filter((val) => {
-          return val.bugId != bugId;
+          return val.bugId !== bugId;
         })
       );
     });

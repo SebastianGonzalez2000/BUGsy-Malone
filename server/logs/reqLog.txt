@@ -1,0 +1,5 @@
+20220629	14:41:41	0bbd263d-c0ce-41ca-afd0-22fd020123d8	GET	http://localhost:3000	/get_bugs
+20220629	14:44:00	e7a5ab7f-d2e9-4359-9e0e-dbdda7d2f199	OPTIONS	http://localhost:3000	/create_bug
+20220629	14:44:00	c3d38bd5-5315-44ec-90f8-38d34760f4e4	POST	http://localhost:3000	/create_bug
+20220629	14:44:14	2e001651-4806-4692-9db3-5e4d0136ffbb	GET	http://localhost:3000	/get_bugs
+20220629	14:45:02	08bfbed4-f225-46e3-be31-0d791df69c95	GET	http://localhost:3000	/get_bugs
