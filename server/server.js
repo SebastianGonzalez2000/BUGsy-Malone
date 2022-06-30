@@ -2,10 +2,10 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
-const path = require("path");
 
 const { logger } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
+const bugs = require("./routes/modify_bugs");
 
 const PORT = 3500;
 
@@ -20,61 +20,7 @@ const db = mysql.createConnection({
   database: "bugDB",
 });
 
-app.post("/create_bug", (req, result) => {
-  const bugId = req.body.bugId;
-  const devId = req.body.devId;
-  const description = req.body.description;
-
-  db.query(
-    "INSERT INTO bugs (bugId, devId, description) VALUES (?,?,?)",
-    [bugId, devId, description],
-    (err, res) => {
-      if (err) {
-        console.log(err);
-      } else {
-        result.send(res);
-      }
-    }
-  );
-});
-
-app.get("/get_bugs", (req, result) => {
-  const tableName = "bugs";
-  db.query(`SELECT * FROM ${tableName}`, (err, res) => {
-    if (err) {
-      console.log(err);
-    } else {
-      result.send(res);
-    }
-  });
-});
-
-app.put("/reassign_bug", (req, result) => {
-  const bugId = req.body.bugId;
-  const devId = req.body.devId;
-  db.query(
-    "UPDATE bugs  SET devId = ? WHERE bugId = ?",
-    [devId, bugId],
-    (err, res) => {
-      if (err) {
-        console.log(err);
-      } else {
-        result.send(res);
-      }
-    }
-  );
-});
-
-app.delete("/delete_bug/:bugId", (req, result) => {
-  const bugId = req.params.bugId;
-  db.query("DELETE FROM bugs WHERE bugId = ?", bugId, (err, res) => {
-    if (err) {
-      console.log(err);
-    } else {
-      result.send(res);
-    }
-  });
-});
+app.use("/bugs", bugs);
 
 app.use(errorHandler);
 

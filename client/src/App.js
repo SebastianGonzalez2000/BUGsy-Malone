@@ -13,7 +13,7 @@ function App() {
   const [newDevId, setNewDevId] = useState(0);
 
   const handleCreateBug = () => {
-    Axios.post(`http://localhost:${PORT}/create_bug`, {
+    Axios.post(`http://localhost:${PORT}/bugs/modify_bugs`, {
       bugId: bugId,
       devId: devId,
       description: description,
@@ -27,13 +27,13 @@ function App() {
   };
 
   const handleShowBugs = () => {
-    Axios.get(`http://localhost:${PORT}/get_bugs`).then((res) => {
+    Axios.get(`http://localhost:${PORT}/bugs/modify_bugs`).then((res) => {
       setBugList(res.data);
     });
   };
 
   const handleUpdateDevId = (bugId) => {
-    Axios.put(`http://localhost:${PORT}/reassign_bug`, {
+    Axios.put(`http://localhost:${PORT}/bugs/modify_bugs`, {
       bugId: bugId,
       devId: newDevId,
     }).then((res) => {
@@ -52,13 +52,15 @@ function App() {
   };
 
   const handleDeleteBug = (bugId) => {
-    Axios.delete(`http://localhost:${PORT}/delete_bug/${bugId}`).then((res) => {
-      setBugList(
-        bugList.filter((val) => {
-          return val.bugId !== bugId;
-        })
-      );
-    });
+    Axios.delete(`http://localhost:${PORT}/bugs/modify_bugs/${bugId}`).then(
+      (res) => {
+        setBugList(
+          bugList.filter((val) => {
+            return val.bugId !== bugId;
+          })
+        );
+      }
+    );
   };
 
   return (

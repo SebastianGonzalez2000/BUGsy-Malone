@@ -1,1 +1,5 @@
 20220629	14:45:02	f5de8e17-2459-47e0-9cd8-cac7b45e6867	TypeError: db.quer is not a function
+20220629	20:55:27	e6c7953d-af15-4ca9-8fb0-3bad671799cf	TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle
