@@ -13,13 +13,6 @@ app.use(logger);
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "password",
-  database: "bugDB",
-});
-
 app.use("/bugs", bugs);
 
 app.use(errorHandler);
